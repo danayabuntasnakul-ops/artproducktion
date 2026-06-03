@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArtproDucktion</title>
+<meta name="description" content="ArtproDucktion — สตูดิโอศิลปะ ไพ่ และงานเขียน โดย Danaya Buntasnakul">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Lora:ital@0;1&family=Sarabun:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FDFAF3; --ink:#2A241C; --honey:#C9954A;
+    --sage:#8FA384; --dusk:#9B8DB5; --line:#E4DCCB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Sarabun',sans-serif;
+    min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; padding:48px 22px 40px;
+  }
+  .wrap{width:100%; max-width:420px; text-align:center}
+
+  .mark{font-size:30px; line-height:1; margin-bottom:14px}
+  .crescent{color:var(--honey)}
+  .brand{
+    font-family:'Playfair Display',serif; font-weight:600;
+    font-size:30px; letter-spacing:.5px; margin-bottom:8px;
+  }
+  .tagline{
+    font-family:'Lora',serif; font-style:italic;
+    color:var(--dusk); font-size:15px; margin-bottom:6px;
+  }
+  .sub{ color:var(--sage); font-size:12.5px; letter-spacing:2px;
+    text-transform:uppercase; margin-bottom:30px;}
+
+  .links{display:flex; flex-direction:column; gap:14px}
+  a.btn{
+    display:block; text-decoration:none; color:var(--ink);
+    background:#FFFDF8; border:1px solid var(--line);
+    border-radius:14px; padding:16px 18px;
+    transition:.18s ease; text-align:left;
+    display:flex; align-items:center; gap:14px;
+  }
+  a.btn:hover{ border-color:var(--honey); transform:translateY(-2px);
+    box-shadow:0 6px 18px rgba(42,36,28,.07);}
+  a.btn .ico{font-size:22px; width:26px; text-align:center; flex:0 0 auto}
+  a.btn .txt{display:flex; flex-direction:column}
+  a.btn .lbl{font-weight:500; font-size:16px}
+  a.btn .hint{font-size:12.5px; color:#8a8273; margin-top:1px}
+
+  a.btn.primary{ background:var(--honey); border-color:var(--honey); color:#fff}
+  a.btn.primary .hint{color:rgba(255,255,255,.82)}
+  a.btn.primary:hover{filter:brightness(1.04)}
+
+  .div{display:flex; align-items:center; justify-content:center;
+    gap:12px; margin:30px 0 18px; color:var(--honey)}
+  .div::before,.div::after{content:""; height:1px; width:46px; background:var(--line)}
+  .div span{font-size:14px}
+
+  footer{font-family:'Lora',serif; font-style:italic;
+    color:#9a917f; font-size:13px; line-height:1.7}
+  footer .name{font-style:normal; color:var(--ink); letter-spacing:.3px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="mark"><span class="crescent">☾</span></div>
+    <div class="brand">ArtproDucktion</div>
+    <div class="tagline">ค้นหาความหมายอย่างแช่มช้า</div>
+    <div class="sub">art · tarot · writing</div>
+
+    <div class="links">
+      <a class="btn primary" href="https://artproducktion.kit.com/7days" target="_blank" rel="noopener">
+        <span class="ico">🎁</span>
+        <span class="txt"><span class="lbl">รับสมุดฟรี · 7 วันแห่งการรับฟังตัวเอง</span>
+        <span class="hint">สมุดบันทึกทาโรต์ + จดหมายวันอาทิตย์</span></span>
+      </a>
+      <a class="btn" href="https://sites.google.com/view/republicofseer" target="_blank" rel="noopener">
+        <span class="ico">🃏</span>
+        <span class="txt"><span class="lbl">จองดูไพ่ · Republic of Seer</span>
+        <span class="hint">เราไม่ทำนาย เราร่วมสะท้อน</span></span>
+      </a>
+      <a class="btn" href="https://www.instagram.com/artproducktion" target="_blank" rel="noopener">
+        <span class="ico">📸</span>
+        <span class="txt"><span class="lbl">Instagram</span>
+        <span class="hint">@artproducktion</span></span>
+      </a>
+      <a class="btn" href="https://www.pinterest.com/artproducktion" target="_blank" rel="noopener">
+        <span class="ico">📌</span>
+        <span class="txt"><span class="lbl">Pinterest</span>
+        <span class="hint">watercolour · tarot · slow looking</span></span>
+      </a>
+    </div>
+
+    <div class="div"><span>❦</span></div>
+    <footer>
+      <div class="name">Danaya Buntasnakul</div>
+      Bangkok · multidisciplinary art studio
+    </footer>
+  </div>
+</body>
+</html>
