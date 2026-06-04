@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,500&family=Sarabun:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --paper:#FDFAF3; --ink:#2A241C; --honey:#C9954A;
+    --sage:#8FA384; --dusk:#9B8DB5; --line:#E4DCCB;
+  }
+  html,body{width:1200px;height:630px}
+  body{
+    background:var(--paper); color:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Sarabun',sans-serif;
+  }
+  .frame{
+    width:1128px; height:558px;
+    border:2px solid var(--line); border-radius:18px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .corner{position:absolute; color:var(--honey); font-size:26px; opacity:.7}
+  .corner.tl{top:24px; left:30px} .corner.tr{top:24px; right:30px}
+  .corner.bl{bottom:24px; left:30px} .corner.br{bottom:24px; right:30px}
+
+  .moon{font-size:66px; color:var(--honey); line-height:1; margin-bottom:18px}
+  .brand{
+    font-family:'Playfair Display',serif; font-weight:600;
+    font-size:82px; letter-spacing:1px; margin-bottom:20px; color:var(--ink);
+  }
+  .tagline{
+    font-family:'Sarabun',sans-serif; font-style:italic; font-weight:300;
+    color:var(--dusk); font-size:32px; margin-bottom:26px;
+  }
+  .rule{display:flex; align-items:center; gap:16px; color:var(--honey); margin-bottom:22px}
+  .rule::before,.rule::after{content:""; height:1px; width:60px; background:var(--line)}
+  .rule span{font-size:20px}
+  .sub{
+    color:var(--sage); font-size:21px; letter-spacing:6px;
+    text-transform:uppercase;
+  }
+  .name{
+    position:absolute; bottom:34px;
+    font-family:'Playfair Display',serif; font-weight:600;
+    font-size:22px; letter-spacing:.5px; color:#9a917f;
+  }
+</style>
+</head>
+<body>
+  <div class="frame">
+    <span class="corner tl">❦</span><span class="corner tr">❦</span>
+    <span class="corner bl">❦</span><span class="corner br">❦</span>
+    <div class="moon">☾</div>
+    <div class="brand">ArtproDucktion</div>
+    <div class="tagline">ค้นหาความหมายอย่างแช่มช้า</div>
+    <div class="rule"><span>✦</span></div>
+    <div class="sub">art · tarot · writing</div>
+    <div class="name">Danaya Buntasnakul · Bangkok</div>
+  </div>
+</body>
+</html>
