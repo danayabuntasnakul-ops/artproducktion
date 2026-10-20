@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  <title>จองอ่านไพ่ — Republic of Seer</title>
+  <meta name="description" content="จองอ่านไพ่ทาโรต์กับ Republic of Seer · พบผ่านจอหรือพบหน้า เริ่มต้น ฿500 · เลือกวันเวลาและชำระเงินได้ในหน้าเดียว">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="จองอ่านไพ่ — Republic of Seer">
+  <meta property="og:description" content="อ่านไพ่ผ่านจอหรือพบหน้า เริ่มต้น ฿500 · จองเองได้ ไม่ต้องรอแชต">
+  <meta property="og:url" content="https://artproducktion.com/tarot/book/">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✦</text></svg>">
+  <style>
+    :root {
+      --ink:#1C1C1C; --ink-soft:#3D3D3D; --text:#2D2D2D; --gray:#8A8A8A; --gray-light:#C8C8C8;
+      --cream:#F7F3ED; --cream-deep:#EDE5D8; --border:#E3DDD5; --bg-from:#FAFAF8; --bg-to:#F0EAE0;
+      --sage:#5C8A6A; --sage-pale:#EBF4EE; --danger:#C0392B; --danger-pale:#FDF0EE;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Helvetica Neue', Arial, 'Noto Sans Thai', sans-serif;
+      background:linear-gradient(160deg, var(--bg-from) 0%, var(--bg-to) 100%);
+      min-height:100vh; padding:16px; color:var(--text); }
+    .container { max-width:580px; margin:0 auto; }
+    .en { color:var(--gray); font-weight:400; }
+
+    .header { text-align:center; padding:28px 0 18px; }
+    .brand { font-size:11px; letter-spacing:4px; color:var(--gray); margin-bottom:8px; }
+    .header h1 { color:var(--ink); font-size:22px; font-weight:700; letter-spacing:-.3px; margin-bottom:6px; }
+    .header p { color:var(--gray); font-size:13px; line-height:1.6; }
+
+    .progress { display:flex; align-items:center; justify-content:center; margin-bottom:22px; }
+    .p-dot { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+      font-size:11px; font-weight:700; background:#E8E3DC; color:var(--gray); transition:all .3s; }
+    .p-dot.active { background:var(--ink); color:#fff; }
+    .p-dot.done { background:var(--sage); color:#fff; }
+    .p-line { width:32px; height:1.5px; background:#E0D9D0; }
+    .p-line.done { background:var(--sage); }
+
+    .card { background:#fff; border-radius:16px; padding:22px 20px; margin-bottom:12px;
+      box-shadow:0 2px 12px rgba(0,0,0,.06), 0 0 0 1px rgba(0,0,0,.03); }
+    .card-title { font-size:16px; font-weight:700; color:var(--ink-soft); margin-bottom:16px; }
+    .card-title .en { font-size:13px; margin-left:4px; }
+
+    .svc-list { display:flex; flex-direction:column; gap:10px; }
+    .svc-card { border:1.5px solid var(--border); border-radius:14px; padding:16px; cursor:pointer;
+      transition:all .2s; background:#fff; user-select:none; }
+    .svc-card:hover { border-color:var(--ink); background:var(--cream); }
+    .svc-card.selected { border-color:var(--ink); background:var(--cream); box-shadow:0 0 0 1px var(--ink); }
+    .svc-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; }
+    .svc-name { font-size:16px; font-weight:700; color:var(--ink); letter-spacing:.3px; }
+    .svc-price { font-size:19px; font-weight:800; color:var(--ink); white-space:nowrap; }
+    .svc-meta { font-size:12px; color:var(--sage); font-weight:600; margin-top:4px; }
+    .svc-desc { font-size:13px; color:var(--ink-soft); line-height:1.65; margin-top:8px; }
+    .svc-desc .en { display:block; font-size:12px; margin-top:2px; }
+    .svc-incl { font-size:12px; color:var(--ink); margin-top:8px; font-weight:600; }
+
+    .sub-box { margin-top:14px; padding:14px 16px; border:1.5px dashed var(--border); border-radius:12px;
+      background:var(--cream); display:none; }
+    .sub-box.show { display:block; }
+    .sub-title { font-size:13px; font-weight:700; color:var(--ink-soft); margin-bottom:10px; }
+    .mode-toggle { display:flex; gap:8px; }
+    .mode-btn { flex:1; padding:11px 8px; border:1.5px solid var(--border); border-radius:10px; background:#fff;
+      cursor:pointer; font-size:14px; font-weight:700; color:var(--gray); font-family:inherit; line-height:1.4; }
+    .mode-btn small { display:block; font-weight:400; font-size:11px; }
+    .mode-btn.active { border-color:var(--ink); color:var(--ink); box-shadow:0 0 0 1px var(--ink); }
+    .sub-hint { font-size:12px; color:var(--gray); margin-top:8px; line-height:1.6; }
+    .addon-row { display:flex; align-items:flex-start; gap:10px; cursor:pointer; }
+    .addon-row input { width:18px; height:18px; margin-top:2px; accent-color:var(--ink); flex-shrink:0; }
+    .addon-label { font-size:13px; color:var(--text); flex:1; line-height:1.6; }
+    .addon-price { font-size:13px; font-weight:700; color:var(--sage); white-space:nowrap; }
+
+    .notice { border-radius:10px; padding:12px 14px; font-size:13px; line-height:1.7; margin-bottom:12px; }
+    .notice-info { background:var(--cream); color:var(--ink-soft); border:1px solid var(--border); }
+    .notice-warn { background:#FBF7EF; color:#7A5C20; border:1px solid #E8D8B0; }
+    .notice b { font-weight:700; }
+
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .form-group { margin-bottom:13px; }
+    .form-label { display:block; font-size:12.5px; font-weight:600; margin-bottom:5px; color:var(--ink-soft); }
+    .form-label .en { font-size:11.5px; }
+    .req { color:var(--danger); }
+    .form-input, .form-textarea { width:100%; padding:10px 12px; border:1.5px solid var(--border); border-radius:9px;
+      font-size:14px; color:var(--text); background:#fff; font-family:inherit; }
+    .form-input::placeholder, .form-textarea::placeholder { color:var(--gray-light); }
+    .form-input:focus, .form-textarea:focus { outline:none; border-color:var(--ink); }
+    .form-textarea { min-height:90px; resize:vertical; }
+
+    .topic-grid { display:flex; flex-wrap:wrap; gap:8px; }
+    .topic-chip { border:1.5px solid var(--border); border-radius:10px; padding:9px 12px; cursor:pointer;
+      background:#fff; font-family:inherit; text-align:left; flex:1 1 150px; }
+    .topic-chip b { display:block; font-size:13px; color:var(--ink); letter-spacing:.5px; }
+    .topic-chip span { display:block; font-size:11px; color:var(--gray); margin-top:2px; }
+    .topic-chip.active { border-color:var(--ink); background:var(--cream); box-shadow:0 0 0 1px var(--ink); }
+
+    .cancel-box { background:var(--danger-pale); border:2px solid var(--danger); border-radius:12px;
+      padding:14px 16px; margin-bottom:14px; color:#7B241C; }
+    .cancel-box .cb-title { font-size:16px; font-weight:800; color:var(--danger); margin-bottom:6px; }
+    .cancel-box p { font-size:14.5px; line-height:1.7; }
+    .cancel-box .en { display:block; font-size:12px; margin-top:6px; color:#A0706A; }
+    .time-row { display:flex; align-items:center; gap:6px; }
+    .time-part { width:64px !important; text-align:center; }
+    .time-colon { font-size:18px; font-weight:700; color:var(--ink-soft); }
+    .unk-row { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--gray); margin-top:7px; cursor:pointer; }
+    .unk-row input { width:15px; height:15px; accent-color:var(--ink); }
+    .policy-list { font-size:12.5px; line-height:1.8; color:var(--ink-soft); padding-left:18px; margin-bottom:12px; }
+    .accept-row { display:flex; gap:10px; align-items:flex-start; cursor:pointer; font-size:13px; line-height:1.6; }
+    .accept-row input { width:18px; height:18px; margin-top:2px; accent-color:var(--ink); flex-shrink:0; }
+
+    .cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+    .cal-title { font-weight:700; color:var(--ink-soft); font-size:15px; }
+    .cal-btn { width:30px; height:30px; border:1.5px solid var(--border); border-radius:8px; background:#fff;
+      cursor:pointer; font-size:15px; color:var(--ink-soft); }
+    .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; text-align:center; }
+    .cal-wday { font-size:11px; color:var(--gray); padding:4px 0; font-weight:600; }
+    .cal-day { padding:8px 2px; border-radius:8px; font-size:13px; }
+    .cal-day.avail { cursor:pointer; color:var(--text); }
+    .cal-day.avail:hover { background:var(--cream); font-weight:600; }
+    .cal-day.chosen { background:var(--ink) !important; color:#fff !important; font-weight:700; }
+    .cal-day.off { color:var(--border); cursor:default; }
+
+    .ts-section { margin-top:20px; }
+    .ts-title { font-size:13px; font-weight:600; color:var(--ink-soft); margin-bottom:8px; }
+    .ts-block-label { font-size:11px; color:var(--gray); font-weight:700; margin:12px 0 6px; letter-spacing:.5px; }
+    .ts-grid { display:flex; flex-wrap:wrap; gap:7px; }
+    .ts-btn { padding:7px 14px; border:1.5px solid var(--border); border-radius:8px; font-size:13px; cursor:pointer;
+      background:#fff; font-family:inherit; color:var(--text); }
+    .ts-btn.avail:hover { border-color:var(--ink); background:var(--cream); }
+    .ts-btn.chosen { background:var(--ink); border-color:var(--ink); color:#fff; font-weight:700; }
+    .ts-btn.busy { background:#F8F8F8; color:var(--gray-light); cursor:not-allowed; border-color:#EBEBEB; text-decoration:line-through; }
+    .ts-loading { font-size:13px; color:var(--gray); line-height:1.6; }
+
+    .pay-box { background:var(--cream); border:1px solid var(--border); border-radius:14px; padding:20px; text-align:center; margin-bottom:16px; }
+    .pay-label { font-size:12px; color:var(--gray); margin-bottom:4px; letter-spacing:.6px; }
+    .pay-amount { font-size:32px; font-weight:800; color:var(--ink); margin-bottom:16px; }
+    .pay-cols { display:flex; gap:16px; align-items:flex-start; justify-content:center; flex-wrap:wrap; }
+    .pay-qr img { width:180px; border-radius:12px; border:1px solid var(--border); background:#fff; display:block; }
+    .pay-qr .ts-loading { display:block; width:180px; padding:20px 0; }
+    .pay-info { flex:1; min-width:160px; text-align:left; font-size:13px; line-height:2; }
+    .pay-info .bank-name { font-weight:700; color:var(--ink); }
+
+    .upload-wrap { border:1.5px dashed var(--border); border-radius:12px; padding:22px; text-align:center; cursor:pointer; background:#fff; }
+    .upload-wrap:hover, .upload-wrap.drag { border-color:var(--ink); background:var(--cream); }
+    .upload-icon { font-size:26px; margin-bottom:6px; opacity:.7; }
+    .upload-hint { font-size:13px; color:var(--gray); line-height:1.6; }
+    .slip-preview { max-width:180px; border-radius:8px; margin-top:10px; display:none; border:1px solid var(--border); }
+
+    .btn { padding:13px 22px; border-radius:10px; border:none; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; }
+    .btn-primary { background:var(--ink); color:#fff; width:100%; }
+    .btn-primary:disabled { background:var(--border); color:var(--gray); cursor:not-allowed; }
+    .btn-back { background:#fff; color:var(--ink-soft); border:1.5px solid var(--border); padding:13px 18px; font-size:14px; }
+    .btn-row { display:flex; gap:10px; margin-top:18px; }
+    .btn-row .btn-primary { flex:1; }
+
+    .alert { padding:11px 14px; border-radius:8px; font-size:13px; margin-bottom:12px; display:none; }
+    .alert-err { background:var(--danger-pale); color:var(--danger); border:1px solid #F5C6C1; }
+
+    .sum-box { background:var(--cream); border:1px solid var(--border); border-radius:10px; padding:14px 16px;
+      font-size:13px; color:var(--ink-soft); line-height:1.8; margin-bottom:14px; }
+    .sum-box b { color:var(--ink); }
+
+    .success-wrap { text-align:center; padding:30px 16px; }
+    .success-title { font-size:22px; font-weight:800; color:var(--sage); margin-bottom:8px; }
+    .success-desc { color:var(--gray); line-height:1.75; font-size:14px; }
+    .bid-box { background:var(--cream); border-radius:10px; padding:14px; margin:18px 0; border:1px solid var(--border); }
+    .bid-label { font-size:11px; color:var(--gray); margin-bottom:4px; letter-spacing:.6px; }
+    .bid-val { font-size:20px; font-weight:800; color:var(--ink); letter-spacing:1px; }
+
+    @media (max-width:480px) {
+      body { padding:12px 12px 110px; }
+      .form-row { grid-template-columns:1fr; }
+      .header { padding:16px 0 10px; }
+      .card { padding:20px 16px; }
+      .form-input, .form-textarea { font-size:16px; padding:12px 14px; }
+      .ts-btn { font-size:15px; padding:10px 16px; }
+      .cal-day { font-size:15px; padding:12px 2px; }
+      .pay-cols { flex-direction:column; align-items:center; }
+      .pay-info { text-align:center; }
+      .btn-row { position:fixed; left:0; right:0; bottom:0; margin:0 !important;
+        padding:12px 14px calc(12px + env(safe-area-inset-bottom)); background:rgba(255,255,255,.96);
+        box-shadow:0 -1px 0 var(--border), 0 -8px 24px rgba(0,0,0,.06); z-index:100; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div id="cfg" hidden>{"services":[{"key":"Quick Reading · 20 นาที (500 บาท)","id":1,"code":"quick","name":"Quick Reading","price":500,"duration":20,"occupy":30,"modes":["online"],"noteIncluded":false,"cancelHours":8,"maxPerDay":0},{"key":"Deep Reading · 45 นาที (1,500 บาท)","id":2,"code":"deep","name":"Deep Reading","price":1500,"duration":45,"occupy":60,"modes":["online","inperson"],"noteIncluded":true,"cancelHours":8,"maxPerDay":0},{"key":"Private Session · 90 นาที (3,000 บาท)","id":3,"code":"private","name":"Private Session","price":3000,"duration":90,"occupy":105,"modes":["inperson"],"noteIncluded":true,"cancelHours":24,"maxPerDay":1}],"week":{"0":[[540,720,true],[780,960,true]],"1":[[540,780,false],[1230,1350,false]],"2":[[540,780,true],[1230,1350,false]],"3":[[540,720,true],[780,960,true]],"5":[[540,780,false]]},"topics":[{"code":"LOVE","th":"ความรัก","en":"relationship · intimacy · separation"},{"code":"WORK","th":"การงาน","en":"career · creative work · decisions"},{"code":"LIFE","th":"ชีวิต","en":"transition · identity · direction"},{"code":"MONEY","th":"การเงิน","en":"financial situation · opportunities"},{"code":"QUESTION","th":"คำถามเฉพาะ","en":"a specific question to explore"}],"sources":[{"code":"ad","th":"เห็นโฆษณา","en":"Saw an ad"},{"code":"ig","th":"Instagram @republicofseer","en":"Instagram @republicofseer"},{"code":"book","th":"หนังสือหรือโต๊ะเปิดไพ่ \"เปิดไพ่ ฟังใจ\"","en":"The book or card table \"เปิดไพ่ ฟังใจ\""},{"code":"friend","th":"เพื่อนหรือคนรู้จักแนะนำ","en":"A friend told me"},{"code":"known","th":"รู้จักกันอยู่แล้ว","en":"We already know each other"},{"code":"other","th":"อื่น ๆ (พิมพ์เพิ่มได้)","en":"Other (tell us if you like)"}],"minDays":3,"step":30,"notePrice":150,"noteDays":7}</div>
+
+  <div class="header">
+    <div class="brand">REPUBLIC OF SEER</div>
+    <h1>Tarot Reading for Reflection &amp; Direction</h1>
+    <p>The cards don&#39;t decide for you. They help you see.<br>ไพ่ไม่ได้ตัดสินใจแทนคุณ แต่ช่วยให้คุณมองเห็น</p>
+  </div>
+
+  <div class="progress" id="progressBar">
+    <div class="p-dot active" id="pd1">1</div><div class="p-line" id="pl1"></div>
+    <div class="p-dot" id="pd2">2</div><div class="p-line" id="pl2"></div>
+    <div class="p-dot" id="pd3">3</div><div class="p-line" id="pl3"></div>
+    <div class="p-dot" id="pd4">4</div>
+  </div>
+
+  <!-- STEP 1 — เลือกบริการ -->
+  <div id="step1">
+    <div class="card">
+      <div class="card-title">เลือกบริการ <span class="en">Choose a session</span></div>
+      <div class="svc-list">
+        <div class="svc-card" id="svc1" onclick="pickSvc(1)">
+          <div class="svc-top"><span class="svc-name">QUICK READING</span><span class="svc-price">฿500</span></div>
+          <div class="svc-meta">20 นาที · พบผ่านจอ · 20 min · Online</div>
+          <div class="svc-desc">อ่านไพ่แบบกระชับสำหรับเรื่องหนึ่งเรื่อง มองสถานการณ์จากอีกมุม และหาทิศทางเบื้องต้น
+            <span class="en">A focused reading for one area of your life — another perspective and a possible direction forward.</span></div>
+        </div>
+        <div class="svc-card" id="svc2" onclick="pickSvc(2)">
+          <div class="svc-top"><span class="svc-name">DEEP READING</span><span class="svc-price">฿1,500</span></div>
+          <div class="svc-meta">45 นาที · พบผ่านจอ หรือ พบหน้า · 45 min · Online or in person</div>
+          <div class="svc-desc">Tarot ร่วมกับ Oracle สำหรับเรื่องที่ต้องการมากกว่าคำตอบสั้น ๆ — Reflection · Perspective · Direction
+            <span class="en">Tarot and Oracle together, for questions that need more than a simple answer.</span></div>
+          <div class="svc-incl">✦ รวม The Seer&#39;s Note · The Seer&#39;s Note included</div>
+        </div>
+        <div class="svc-card" id="svc3" onclick="pickSvc(3)">
+          <div class="svc-top"><span class="svc-name">PRIVATE SESSION</span><span class="svc-price">฿3,000</span></div>
+          <div class="svc-meta">90 นาที · พบหน้า · 90 min · In person</div>
+          <div class="svc-desc">เริ่มจากค้นหาคำถามจริงก่อนเปิดไพ่ แล้วค่อย ๆ สำรวจผ่าน Tarot และ Oracle พร้อมสนทนาตลอด session
+            <span class="en">We begin with the question beneath the question, then explore it through Tarot, Oracle and conversation.</span></div>
+          <div class="svc-incl">✦ รวม The Seer&#39;s Note · The Seer&#39;s Note included</div>
+        </div>
+      </div>
+
+      <!-- รูปแบบ (Deep เท่านั้น) -->
+      <div class="sub-box" id="modeBox">
+        <div class="sub-title">รูปแบบการนัด <span class="en">How would you like to meet?</span></div>
+        <div class="mode-toggle">
+          <button class="mode-btn" id="modeOnline" type="button" onclick="pickMode('online')">พบผ่านจอ<small>Online · Google Meet</small></button>
+          <button class="mode-btn" id="modeInperson" type="button" onclick="pickMode('inperson')">พบหน้า<small>In person</small></button>
+        </div>
+        <div class="sub-hint">นัดพบหน้าได้เฉพาะวันอังคาร พุธ อาทิตย์ (รอบกลางวัน) · สถานที่แจ้งหลังยืนยันการจอง<br>In-person sessions: Tue, Wed, Sun (daytime). Venue shared after confirmation.</div>
+      </div>
+
+      <!-- The Seer's Note (Quick เท่านั้น) -->
+      <div class="sub-box" id="addonBox">
+        <label class="addon-row">
+          <input type="checkbox" id="addonNote" onchange="updateTotal()">
+          <span class="addon-label"><b>Add The Seer&#39;s Note</b><br>Receive a personal visual record of your reading after the session.<br><span class="en">บันทึกการอ่านไพ่ของคุณในรูปแบบภาพ ส่งทางอีเมลภายใน 7 วันหลัง session</span></span>
+          <span class="addon-price">+฿150</span>
+        </label>
+      </div>
+
+      <div id="err1" class="alert alert-err" style="margin-top:12px;"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnTo2" onclick="fromStep1()" disabled>ถัดไป · Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 — วันเวลา -->
+  <div id="step2" style="display:none">
+    <div class="notice notice-info" id="schedNotice"></div>
+    <div class="notice notice-warn" id="policyNotice"></div>
+    <div class="cancel-box" id="cancelNotice"></div>
+    <div class="card">
+      <div class="card-title">เลือกวันและเวลา <span class="en">Date &amp; time</span></div>
+      <div class="cal-header">
+        <button class="cal-btn" type="button" onclick="prevMo()">‹</button>
+        <div class="cal-title" id="calTitle">–</div>
+        <button class="cal-btn" type="button" onclick="nextMo()">›</button>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-wday">อา</div><div class="cal-wday">จ</div><div class="cal-wday">อ</div>
+        <div class="cal-wday">พ</div><div class="cal-wday">พฤ</div><div class="cal-wday">ศ</div><div class="cal-wday">ส</div>
+      </div>
+      <div class="cal-grid" id="calBody"></div>
+      <div class="ts-section" id="tsSec" style="display:none">
+        <div class="ts-title">เลือกเวลา · Time — <span id="tsDateLbl"></span></div>
+        <div id="tsBody"></div>
+      </div>
+    </div>
+    <div id="err2" class="alert alert-err"></div>
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goStep(1)">←</button>
+      <button class="btn btn-primary" onclick="fromStep2()">ถัดไป · Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 — ข้อมูล -->
+  <div id="step3" style="display:none">
+    <div class="card">
+      <div class="card-title">ข้อมูลของคุณ <span class="en">About you</span></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">ชื่อ-นามสกุล <span class="en">(ไทย)</span> <span class="req">*</span></label>
+          <input class="form-input" id="p_name" placeholder="ชื่อ นามสกุล"></div>
+        <div class="form-group"><label class="form-label">Full name <span class="en">(English)</span> <span class="req">*</span></label>
+          <input class="form-input" id="p_name_en" placeholder="Name Surname"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">ชื่อเล่น <span class="en">Nickname</span> <span class="req">*</span></label>
+          <input class="form-input" id="p_nick" placeholder="ชื่อเล่น"></div>
+        <div class="form-group"><label class="form-label">วันเดือนปีเกิด <span class="en">Date of birth</span> <span class="req">*</span></label>
+          <input class="form-input" type="date" id="p_birth"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">เวลาเกิด <span class="en">Time of birth</span> <span class="req">*</span></label>
+          <div class="time-row">
+            <input class="form-input time-part" id="p_bh" inputmode="numeric" maxlength="2" placeholder="ชม." oninput="onTimePart(this, 'p_bm')">
+            <span class="time-colon">:</span>
+            <input class="form-input time-part" id="p_bm" inputmode="numeric" maxlength="2" placeholder="นาที" oninput="onTimePart(this, '')">
+          </div>
+          <label class="unk-row"><input type="checkbox" id="p_bunk" onchange="toggleBirthUnknown()">ไม่ทราบเวลาเกิด · I don&#39;t know</label></div>
+        <div class="form-group"><label class="form-label">อำเภอที่เกิด <span class="en">District</span> <span class="req">*</span></label>
+          <input class="form-input" id="p_dist" placeholder="อำเภอ / เขต"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">จังหวัดที่เกิด <span class="en">Province</span> <span class="req">*</span></label>
+          <input class="form-input" id="p_prov" placeholder="จังหวัด"></div>
+        <div class="form-group"><label class="form-label">เบอร์โทร <span class="en">Phone</span> <span class="req">*</span></label>
+          <input class="form-input" type="tel" id="p_phone" placeholder="08X-XXX-XXXX"></div>
+      </div>
+      <div class="form-group"><label class="form-label">อีเมล <span class="en">Email</span> <span class="req">*</span></label>
+        <input class="form-input" type="email" id="p_email" placeholder="email@example.com"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">หัวข้อ <span class="en">Topic</span> <span class="req">*</span></div>
+      <div class="topic-grid" id="topicGrid"></div>
+      <div class="notice notice-warn" style="margin:14px 0 0;">ไม่รับดูเรื่องชู้สาว / มือที่สาม และเรื่องคดีความ<br><span class="en">We do not read on affairs, third-party relationships or legal cases.</span></div>
+      <div class="form-group" style="margin-top:14px;">
+        <label class="form-label">อยากเล่าให้เราฟังสักนิดไหม <span class="en">Tell us a little about what brings you here.</span></label>
+        <textarea class="form-textarea" id="p_question" placeholder="ไม่ต้องยาว · A few lines is enough"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title" style="margin-bottom:4px;">รู้จักเราจากไหน <span class="en">How did you hear about us?</span></div>
+      <div class="sub-hint" style="margin:0 0 12px;">ไม่ตอบก็จองได้ค่ะ · <span class="en">Optional</span></div>
+      <div class="topic-grid" id="sourceGrid"></div>
+      <input class="form-input" id="p_source_other" maxlength="80" placeholder="พิมพ์ได้เลยค่ะ · Tell us if you like" style="margin-top:10px;display:none;">
+    </div>
+
+    <div class="card">
+      <div class="card-title">เงื่อนไขการจอง <span class="en">Booking policy</span></div>
+      <div class="cancel-box" id="cancelPolicy"></div>
+      <ul class="policy-list" id="policyList"></ul>
+      <label class="accept-row"><input type="checkbox" id="p_accept"><span>ฉันอ่านและยอมรับเงื่อนไขการจอง<br><span class="en">I have read and accept the booking policy.</span></span></label>
+    </div>
+
+    <div id="err3" class="alert alert-err"></div>
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goStep(2)">←</button>
+      <button class="btn btn-primary" onclick="fromStep3()">ถัดไป · Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 — ชำระเงิน -->
+  <div id="step4" style="display:none">
+    <div class="sum-box"><b>สรุปการจอง · Summary</b><br><span id="sumText">–</span></div>
+    <div class="card">
+      <div class="card-title">ชำระเงินเต็มจำนวน <span class="en">Full payment</span></div>
+      <div class="pay-box">
+        <div class="pay-label">ยอดที่ต้องชำระ · AMOUNT</div>
+        <div class="pay-amount" id="payAmt">฿0</div>
+        <div class="pay-cols">
+          <div class="pay-qr" id="payQr"><span class="ts-loading">กำลังโหลด QR…</span></div>
+          <div class="pay-info">
+            <p class="bank-name">QR พร้อมเพย์ใส่ยอดแล้ว · PromptPay</p>
+            <p>สแกนด้วยแอปธนาคารใดก็ได้ ยอดจะขึ้นเอง ไม่ต้องพิมพ์ค่ะ</p>
+            <p style="font-size:12px;"><b>มือถือ:</b> แคปหน้าจอ (หรือกดค้างที่รูป QR) → เปิดแอปธนาคาร → สแกน → เลือกรูปจากอัลบั้ม<br><span class="en">On mobile, take a screenshot of the QR and scan it from your gallery in your banking app.</span></p>
+            <a id="saveQr" href="#" download="promptpay.png" style="display:none;font-size:12px;">บันทึกรูป QR · Save QR</a>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">แนบสลิปการโอนเงิน <span class="en">Payment slip</span> <span class="req">*</span></label>
+        <div class="upload-wrap" id="upWrap" onclick="document.getElementById('slipInput').click()">
+          <div class="upload-icon" id="upIcon">📎</div>
+          <div class="upload-hint" id="upHint">แตะเพื่อเลือกรูปสลิป · Tap to upload<br><small>JPG / PNG ไม่เกิน 5MB</small></div>
+          <img id="slipPreview" class="slip-preview" alt="">
+        </div>
+        <input type="file" id="slipInput" accept="image/*" style="display:none" onchange="onSlip(event)">
+      </div>
+    </div>
+    <div id="err4" class="alert alert-err"></div>
+    <div class="btn-row">
+      <button class="btn btn-back" onclick="goStep(3)">←</button>
+      <button class="btn btn-primary" id="btnSubmit" onclick="doSubmit()">ยืนยันการจอง · Confirm</button>
+    </div>
+  </div>
+
+  <!-- STEP 5 — สำเร็จ -->
+  <div id="step5" style="display:none">
+    <div class="card">
+      <div class="success-wrap">
+        <div class="success-title" id="s5title">ส่งการจองแล้วค่ะ</div>
+        <div class="success-desc" id="s5pending">
+          <p>ได้รับข้อมูลและสลิปของคุณแล้วนะคะ เราจะตรวจสอบและส่งอีเมลยืนยันให้เร็ว ๆ นี้ค่ะ</p>
+          <p class="en">We have received your booking. A confirmation email will follow shortly.</p>
+        </div>
+        <div class="success-desc" id="s5confirmed" style="display:none">
+          <p>ตรวจสอบสลิปเรียบร้อย ยืนยันการจองแล้วค่ะ อีเมลยืนยัน (พร้อมลิงก์ Google Meet ถ้าพบผ่านจอ) ส่งให้แล้ว ถ้าไม่เจอภายใน 10 นาที ลองดูในกล่องสแปมนะคะ</p>
+          <p class="en">Your payment has been verified and your booking is confirmed. A confirmation email is on its way.</p>
+        </div>
+        <div class="bid-box"><div class="bid-label">BOOKING ID</div><div class="bid-val" id="bidVal">–</div></div>
+        <p style="font-size:12px;color:var(--gray);">กรุณาเก็บ ID นี้ไว้เป็นหลักฐานนะคะ · Please keep this ID.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function readSlipFile(file, cb) {
+  if (!file) return cb('', 'no file');
+  if (!/^image\//.test(file.type)) return cb('', 'not image');
+  var reader = new FileReader();
+  reader.onerror = function () { cb('', 'read error'); };
+  reader.onload = function (ev) {
+    var src = ev.target.result;
+    var img = new Image();
+    img.onload = function () {
+      var MAX = 1600, w = img.naturalWidth, h = img.naturalHeight;
+      var scale = Math.min(1, MAX / Math.max(w, h));
+      if (scale === 1 && file.size < 1500000 && file.type === 'image/jpeg') return cb(src, null);
+      var cv = document.createElement('canvas');
+      cv.width = Math.round(w * scale); cv.height = Math.round(h * scale);
+      var cx = cv.getContext('2d');
+      cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height);
+      cx.drawImage(img, 0, 0, cv.width, cv.height);
+      try { cb(cv.toDataURL('image/jpeg', 0.88), null); } catch (e) { cb(src, null); }
+    };
+    img.onerror = function () { cb('', 'decode error'); };
+    img.src = src;
+  };
+  reader.readAsDataURL(file);
+}
+</script>
+<script>
+/* หน้าจองในเว็บเราเอง (20 ต.ค. 2569) — แทนหน้า HtmlService ของ Google ซึ่งเบราว์เซอร์ในแอป IG/TikTok/FB บน iPhone เปิดไม่ได้
+   ส่ง JSON ไป Apps Script "TarotBooking" (doPost) ด้วย fetch POST แบบ text/plain → ไม่มี preflight · Google ตอบ 302 ไป googleusercontent พร้อม Access-Control-Allow-Origin: *
+   ข้อมูลบริการ / ตาราง / หัวข้อ ใน <div id="cfg"> เป็นสำเนาของ clientConfig() ฝั่ง server — harness ของระบบจองตรวจว่าตรงกัน (แก้ CONFIG แล้วต้องอัปเดตที่นี่ด้วย)
+   ป้าย ?src= จากลิงก์แอด (metaad · ttad …) เก็บค่าแรกไว้ใน sessionStorage แล้วส่งไปกับการจอง → คอลัมน์ "ป้ายที่มา (src)" ในชีต */
+var CFG = JSON.parse(document.getElementById('cfg').textContent);
+var API = 'https://script.google.com/macros/s/AKfycbyFFmoTN0-eRxhR_zgy6MrM_4PWqVO7N96tXZkO8EbwtNpeFpl2Aq2o7iolU3i50ije/exec';
+var OWNER = 'artproducktion@gmail.com';
+var NET_ERR = 'เชื่อมต่อระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้งนะคะ ถ้ายังไม่ได้ อีเมลมาที่ ' + OWNER;
+// ปุ่ม "บันทึกรูป QR" ใช้ไม่ได้ในเบราว์เซอร์ของแอป IG/FB/TikTok/LINE → ไม่แสดง ให้แคปหน้าจอแทน
+var inApp = /Instagram|FBAN|FBAV|FB_IAB|TikTok|musical_ly|BytedanceWebview|Line\//i.test(navigator.userAgent);
+var srcTag = '';
+try {
+  var q = (new URLSearchParams(location.search).get('src') || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 20);
+  if (q) sessionStorage.setItem('ros_src', q);
+  srcTag = sessionStorage.getItem('ros_src') || q;
+} catch (e) {}
+
+// เรียก Apps Script: ส่งข้อความ JSON · คำตอบต้องเป็น JSON (ถ้าไม่ใช่ = Google ตอบหน้า error → แจ้งลองใหม่)
+function api(body, timeoutMs, cb) {
+  var finished = false;
+  var timer = setTimeout(function () { finish(null, 'timeout'); }, timeoutMs);
+  function finish(j, err) { if (finished) return; finished = true; clearTimeout(timer); cb(j, err); }
+  try {
+    fetch(API, { method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'text/plain;charset=utf-8' }, redirect: 'follow', cache: 'no-store' })
+      .then(function (r) { return r.text(); })
+      .then(function (txt) { var j = null; try { j = JSON.parse(txt); } catch (e) {} finish(j, j ? null : 'badjson'); })
+      .catch(function (e) { finish(null, (e && e.message) || 'network'); });
+  } catch (e) { finish(null, 'network'); }
+}
+var SVCS = {};
+CFG.services.forEach(function (s) { SVCS[s.id] = s; });
+
+var DAY_TH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
+var DAY_EN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var MONTHS_TH = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+
+var selSvc = null, selMode = null, selDate = null, selTime = null, selTopic = null, selSource = '';
+var blockedDays = [], slipB64 = null, slipName = '', qrLoaded = false;
+var cyear = new Date().getFullYear(), cmonth = new Date().getMonth();
+
+function el(id) { return document.getElementById(id); }
+function pad2(n) { return ('0' + n).slice(-2); }
+function minToStr(m) { return pad2(Math.floor(m / 60)) + ':' + pad2(m % 60); }
+function dateFmt(d) { return pad2(d.getDate()) + '/' + pad2(d.getMonth() + 1) + '/' + d.getFullYear(); }
+function weekdayOf(dstr) { var p = dstr.split('/').map(Number); return new Date(p[2], p[1] - 1, p[0]).getDay(); }
+function money(n) { return '฿' + n.toLocaleString(); }
+function esc(v) { var d = document.createElement('div'); d.textContent = v == null ? '' : String(v); return d.innerHTML; }
+
+/* ── กฎตาราง (ต้องตรงกับ isSlotFree ฝั่ง server) ── */
+function eligibleBlocks(weekday) {
+  var blocks = CFG.week[String(weekday)] || [];
+  return blocks.filter(function (b) { return selMode !== 'inperson' || b[2]; });
+}
+function isDayOpen(weekday) { return eligibleBlocks(weekday).length > 0; }
+
+/* ── ขั้นตอน ── */
+function setProgress(n) {
+  for (var i = 1; i <= 4; i++) el('pd' + i).className = 'p-dot' + (i < n ? ' done' : i === n ? ' active' : '');
+  for (var j = 1; j <= 3; j++) el('pl' + j).className = 'p-line' + (j < n ? ' done' : '');
+}
+function goStep(n) {
+  ['step1','step2','step3','step4','step5'].forEach(function (s, i) { el(s).style.display = (i + 1 === n) ? 'block' : 'none'; });
+  if (n <= 4) setProgress(n);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function showErr(id, msg) {
+  var e = el(id); e.textContent = msg; e.style.display = 'block';
+  setTimeout(function () { e.style.display = 'none'; }, 6000);
+}
+
+/* ── STEP 1 ── */
+function pickSvc(n) {
+  selSvc = n; selDate = null; selTime = null;
+  var s = SVCS[n];
+  selMode = s.modes.length === 1 ? s.modes[0] : null;
+  for (var i = 1; i <= 3; i++) el('svc' + i).className = 'svc-card' + (i === n ? ' selected' : '');
+  el('modeBox').classList.toggle('show', s.modes.length > 1);
+  el('modeOnline').classList.remove('active'); el('modeInperson').classList.remove('active');
+  el('addonBox').classList.toggle('show', !s.noteIncluded);
+  if (s.noteIncluded) el('addonNote').checked = false;
+  el('btnTo2').disabled = false;
+}
+function pickMode(m) {
+  selMode = m; selDate = null; selTime = null;
+  el('modeOnline').classList.toggle('active', m === 'online');
+  el('modeInperson').classList.toggle('active', m === 'inperson');
+}
+function fromStep1() {
+  if (!selSvc) return;
+  if (!selMode) { showErr('err1', 'กรุณาเลือกรูปแบบการนัด · Please choose online or in person'); return; }
+  updateNotices();
+  goStep(2);
+  loadBlockedDays();
+}
+
+/* ── STEP 2 ── */
+function scheduleText() {
+  var parts = [];
+  [1, 2, 3, 4, 5, 6, 0].forEach(function (wd) {
+    var bl = eligibleBlocks(wd);
+    if (!bl.length) return;
+    parts.push(DAY_TH[wd] + ' ' + bl.map(function (b) { return minToStr(b[0]) + '–' + minToStr(b[1]); }).join(', '));
+  });
+  return parts.join(' · ');
+}
+function updateNotices() {
+  var s = SVCS[selSvc];
+  var modeTxt = selMode === 'inperson' ? 'พบหน้า · In person' : 'พบผ่านจอ (Google Meet) · Online';
+  var html = '<b>' + s.name + ' · ' + modeTxt + '</b><br>รอบที่เปิด: ' + scheduleText();
+  if (s.maxPerDay) html += '<br>รับวันละ ' + s.maxPerDay + ' ท่าน · One Private Session per day';
+  if (selMode === 'inperson') html += '<br>นัดที่คาเฟ่หรือ co-working space · แจ้งสถานที่หลังยืนยันการจอง · ค่าเครื่องดื่มลูกค้าชำระเอง';
+  el('schedNotice').innerHTML = html;
+  el('policyNotice').innerHTML = '<b>จองล่วงหน้าอย่างน้อย ' + CFG.minDays + ' วัน</b> · ชำระเต็มจำนวนเพื่อยืนยันการจอง' +
+    '<br><span class="en">Book at least ' + CFG.minDays + ' days ahead. Full payment confirms your booking.</span>';
+  el('cancelNotice').innerHTML = cancelHtml(s);
+}
+function renderCal() {
+  el('calTitle').textContent = MONTHS_TH[cmonth] + ' ' + (cyear + 543);
+  var body = el('calBody'); body.innerHTML = '';
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var minDate = new Date(today); minDate.setDate(minDate.getDate() + CFG.minDays);
+  var firstDay = new Date(cyear, cmonth, 1).getDay();
+  var days = new Date(cyear, cmonth + 1, 0).getDate();
+  for (var i = 0; i < firstDay; i++) addCell(body, '', 'off');
+  for (var d = 1; d <= days; d++) {
+    var date = new Date(cyear, cmonth, d);
+    var dstr = dateFmt(date);
+    var wd = date.getDay();
+    if (date < minDate || !isDayOpen(wd) || blockedDays.indexOf(dstr) > -1) { addCell(body, d, 'off'); continue; }
+    var cell = addCell(body, d, 'avail' + (dstr === selDate ? ' chosen' : ''));
+    cell.onclick = (function (ds, c) { return function () { chooseDate(ds, c); }; })(dstr, cell);
+  }
+}
+function addCell(parent, txt, cls) {
+  var c = document.createElement('div'); c.className = 'cal-day ' + cls; c.textContent = txt;
+  parent.appendChild(c); return c;
+}
+var blockedCache = {};
+function loadBlockedDays() {
+  var key = cyear + '-' + cmonth;
+  blockedDays = blockedCache[key] || [];
+  renderCal();
+  if (blockedCache[key]) return;
+  api({ action: 'blocked', year: cyear, month: cmonth }, 30000, function (r) {
+    if (!r || !r.success) return;   // โหลดวันปิดไม่ได้ = เลือกวันได้ตามตาราง · ตอนส่งจอง server ตรวจซ้ำอีกครั้งอยู่แล้ว
+    blockedCache[key] = r.blocked || [];
+    if (cyear + '-' + cmonth === key) { blockedDays = blockedCache[key]; renderCal(); }
+  });
+}
+function prevMo() { cmonth--; if (cmonth < 0) { cmonth = 11; cyear--; } loadBlockedDays(); }
+function nextMo() { cmonth++; if (cmonth > 11) { cmonth = 0; cyear++; } loadBlockedDays(); }
+
+function chooseDate(dstr, cell) {
+  selDate = dstr; selTime = null;
+  var cells = document.querySelectorAll('#calBody .avail');
+  for (var i = 0; i < cells.length; i++) cells[i].classList.remove('chosen');
+  cell.classList.add('chosen');
+  el('tsSec').style.display = 'block';
+  el('tsDateLbl').textContent = DAY_TH[weekdayOf(dstr)] + ' ' + dstr;
+  el('tsBody').innerHTML = '<span class="ts-loading">กำลังโหลดเวลาว่าง… · Loading…</span>';
+  api({ action: 'slots', date: dstr }, 30000, function (r) {
+    if (selDate !== dstr) return;
+    if (!r || !r.success) { el('tsBody').innerHTML = '<span class="ts-loading">โหลดเวลาไม่สำเร็จ กรุณาแตะวันที่อีกครั้งค่ะ · Could not load times, please tap the date again.</span>'; return; }
+    buildSlots(r);
+  });
+}
+function buildSlots(info) {
+  var s = SVCS[selSvc];
+  var body = el('tsBody'); body.innerHTML = '';
+  if (s.maxPerDay && info.privateCount >= s.maxPerDay) {
+    body.innerHTML = '<span class="ts-loading">วันนี้มี Private Session แล้ว กรุณาเลือกวันอื่นนะคะ<br>Private Session is fully booked on this day.</span>';
+    return;
+  }
+  var any = false;
+  eligibleBlocks(weekdayOf(selDate)).forEach(function (b) {
+    var grid = document.createElement('div'); grid.className = 'ts-grid';
+    var count = 0;
+    for (var t = b[0]; t + s.duration <= b[1]; t += CFG.step) {
+      var end = t + s.occupy;
+      var busy = info.busy.some(function (x) { return t < x[1] && end > x[0]; });
+      if (busy) continue;   // แสดงเฉพาะเวลาที่ว่าง
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'ts-btn avail';
+      btn.textContent = minToStr(t);
+      btn.onclick = (function (str, bt) { return function () { pickTime(str, bt); }; })(minToStr(t), btn);
+      grid.appendChild(btn); count++; any = true;
+    }
+    if (!count) return;
+    var lbl = document.createElement('div'); lbl.className = 'ts-block-label';
+    lbl.textContent = minToStr(b[0]) + ' – ' + minToStr(b[1]);
+    body.appendChild(lbl); body.appendChild(grid);
+  });
+  if (!any) body.innerHTML = '<span class="ts-loading">วันนี้เต็มแล้ว กรุณาเลือกวันอื่นนะคะ · Fully booked — please choose another day.</span>';
+}
+function pickTime(str, btn) {
+  selTime = str;
+  var btns = document.querySelectorAll('.ts-btn.avail, .ts-btn.chosen');
+  for (var i = 0; i < btns.length; i++) btns[i].className = 'ts-btn avail';
+  btn.className = 'ts-btn chosen';
+}
+function fromStep2() {
+  if (!selDate) { showErr('err2', 'กรุณาเลือกวัน · Please choose a date'); return; }
+  if (!selTime) { showErr('err2', 'กรุณาเลือกเวลา · Please choose a time'); return; }
+  renderPolicy();
+  goStep(3);
+}
+
+/* ── STEP 3 ── */
+function renderTopics() {
+  var g = el('topicGrid'); g.innerHTML = '';
+  CFG.topics.forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'topic-chip' + (selTopic === t.code ? ' active' : '');
+    b.innerHTML = '<b>' + esc(t.code) + ' · ' + esc(t.th) + '</b><span>' + esc(t.en) + '</span>';
+    b.onclick = function () { selTopic = t.code; renderTopics(); };
+    g.appendChild(b);
+  });
+}
+/* "รู้จักเราจากไหน" — ข้ามได้ · กดซ้ำเพื่อยกเลิก · "อื่น ๆ" เปิดช่องพิมพ์ */
+function renderSources() {
+  var g = el('sourceGrid'); g.innerHTML = '';
+  CFG.sources.forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'topic-chip' + (selSource === t.code ? ' active' : '');
+    b.innerHTML = '<b>' + esc(t.th) + '</b><span>' + esc(t.en) + '</span>';
+    b.onclick = function () { pickSource(t.code); };
+    g.appendChild(b);
+  });
+  el('p_source_other').style.display = selSource === 'other' ? 'block' : 'none';
+}
+function pickSource(code) {
+  selSource = selSource === code ? '' : code;
+  renderSources();
+  if (selSource === 'other') el('p_source_other').focus();
+}
+function renderPolicy() {
+  var s = SVCS[selSvc];
+  var items = [
+    'ชำระเต็มจำนวนเพื่อยืนยันการจอง · Full payment confirms your booking',
+    'จองล่วงหน้าอย่างน้อย ' + CFG.minDays + ' วัน · Book at least ' + CFG.minDays + ' days ahead',
+    'มาสาย session จบตามเวลาที่จอง · Late arrivals end on time',
+    'ไม่มาตามนัด ถือว่าใช้บริการแล้ว · No-shows count as a completed session'
+  ];
+  if (selMode === 'inperson') items.push('สถานที่แจ้งหลังยืนยันการจอง · ค่าเครื่องดื่มลูกค้าชำระเอง');
+  if (s.noteIncluded || el('addonNote').checked) items.push("The Seer's Note ส่งทางอีเมลภายใน " + CFG.noteDays + ' วันหลัง session');
+  items.push('ภาพสลิปจะถูกส่งตรวจสอบกับผู้ให้บริการตรวจสลิป (EasySlip) เพื่อยืนยันการชำระเงิน');
+  el('cancelPolicy').innerHTML = cancelHtml(s);
+  el('policyList').innerHTML = items.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('');
+}
+function fromStep3() {
+  var req = ['p_name','p_name_en','p_nick','p_birth','p_dist','p_prov','p_phone','p_email'];
+  for (var i = 0; i < req.length; i++) {
+    var f = el(req[i]);
+    if (!f.value.trim()) { f.focus(); showErr('err3', 'กรุณากรอกข้อมูลให้ครบนะคะ · Please fill in all required fields'); return; }
+  }
+  if (!birthTimeValue()) {
+    el('p_bh').focus();
+    showErr('err3', 'กรุณากรอกเวลาเกิด ชั่วโมง 00–23 และนาที 00–59 หรือติ๊ก ไม่ทราบเวลาเกิด · Please enter a valid time of birth');
+    return;
+  }
+  var email = el('p_email').value.trim();
+  var at = email.indexOf('@');
+  if (at < 1 || email.lastIndexOf('.') < at + 2 || email.indexOf(' ') > -1) {
+    el('p_email').focus(); showErr('err3', 'รูปแบบอีเมลไม่ถูกต้องค่ะ · Invalid email'); return;
+  }
+  if (!selTopic) { showErr('err3', 'กรุณาเลือกหัวข้อ · Please choose a topic'); return; }
+  if (!el('p_accept').checked) { showErr('err3', 'กรุณายอมรับเงื่อนไขการจอง · Please accept the booking policy'); return; }
+  goPayment();
+}
+
+/* ── STEP 4 ── */
+function totalPrice() {
+  var s = SVCS[selSvc];
+  return s.price + (!s.noteIncluded && el('addonNote').checked ? CFG.notePrice : 0);
+}
+function updateTotal() { if (selSvc) el('payAmt').textContent = money(totalPrice()); }
+function goPayment() {
+  var s = SVCS[selSvc];
+  el('payAmt').textContent = money(totalPrice());
+  var sum = esc(s.key) +
+    '<br>' + (selMode === 'inperson' ? 'พบหน้า · In person' : 'พบผ่านจอ (Google Meet) · Online') +
+    '<br>' + DAY_TH[weekdayOf(selDate)] + ' ' + selDate + ' เวลา ' + selTime + ' น.';
+  if (s.noteIncluded) sum += "<br>✦ รวม The Seer's Note";
+  else if (el('addonNote').checked) sum += "<br>✦ The Seer's Note +" + money(CFG.notePrice);
+  sum += '<br>คุณ' + esc(el('p_nick').value.trim()) + ' · ' + esc(selTopic);
+  el('sumText').innerHTML = sum;
+  goStep(4);
+  loadQr();
+}
+function loadQr() {
+  var s = SVCS[selSvc];
+  var addon = !s.noteIncluded && el('addonNote').checked;
+  var key = s.key + '|' + (addon ? 1 : 0);
+  if (qrLoaded === key) return;
+  el('payQr').innerHTML = '<span class="ts-loading">กำลังโหลด QR…</span>';
+  el('saveQr').style.display = 'none';
+  api({ action: 'qr', service: s.key, addonNote: addon }, 30000, function (r) {
+    if (!r || !r.success || !r.svg) {
+      el('payQr').innerHTML = '<span class="ts-loading">โหลด QR ไม่สำเร็จ <a href="#" onclick="loadQr();return false;">แตะเพื่อลองใหม่</a><br>Could not load the QR, tap to retry.</span>';
+      return;
+    }
+    qrLoaded = key;
+    renderQr(r.svg, r.amountText);
+  });
+}
+/* SVG → PNG ให้กดค้างบันทึกลงอัลบั้มได้ (แปลงไม่ได้ก็แสดง SVG ตรง ๆ) */
+function renderQr(svg, amountText) {
+  var box = el('payQr'); box.innerHTML = svg;
+  var img = new Image();
+  img.onload = function () {
+    try {
+      var cv = document.createElement('canvas'); cv.width = cv.height = 720;
+      var cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, 720, 720); cx.drawImage(img, 0, 0, 720, 720);
+      var png = cv.toDataURL('image/png');
+      box.innerHTML = '<img alt="PromptPay QR ' + esc(amountText) + ' บาท" src="' + png + '">';
+      if (!inApp) { var a = el('saveQr'); a.href = png; a.download = 'promptpay-' + String(amountText).replace(/[^0-9.]/g, '') + '.png'; a.style.display = 'inline-block'; }
+    } catch (e) {}
+  };
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+function onSlip(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  el('upHint').textContent = 'กำลังอ่านรูป…';
+  readSlipFile(file, function (dataUrl, err) {   // ย่อให้ด้านยาวไม่เกิน 1600px (EasySlip รับไม่เกิน 4 MB) — จาก PaymentCore
+    if (err || !dataUrl) { slipB64 = null; el('upHint').textContent = 'แตะเพื่อเลือกรูปสลิป · Tap to upload'; showErr('err4', 'อ่านรูปไม่ได้ กรุณาเลือกรูปสลิปเป็น JPG หรือ PNG นะคะ'); return; }
+    slipB64 = dataUrl; slipName = file.name;
+    el('slipPreview').src = slipB64; el('slipPreview').style.display = 'block';
+    el('upIcon').textContent = '✅'; el('upHint').textContent = file.name;
+  });
+}
+(function () {
+  var w = el('upWrap');
+  w.addEventListener('dragover', function (e) { e.preventDefault(); w.classList.add('drag'); });
+  w.addEventListener('dragleave', function () { w.classList.remove('drag'); });
+  w.addEventListener('drop', function (e) {
+    e.preventDefault(); w.classList.remove('drag');
+    if (e.dataTransfer.files[0]) onSlip({ target: { files: e.dataTransfer.files } });
+  });
+})();
+
+function doSubmit() {
+  if (!slipB64) { showErr('err4', 'กรุณาแนบสลิปด้วยนะคะ · Please upload your payment slip'); return; }
+  var btn = el('btnSubmit');
+  btn.disabled = true; btn.textContent = 'กำลังตรวจสอบสลิป… · Verifying…';
+  var s = SVCS[selSvc];
+  var payload = {
+    service: s.key, mode: selMode, topic: selTopic,
+    fullName: el('p_name').value.trim(), fullNameEn: el('p_name_en').value.trim(),
+    nickname: el('p_nick').value.trim(), birthDate: el('p_birth').value,
+    birthTime: birthTimeValue(), birthDistrict: el('p_dist').value.trim(),
+    birthProvince: el('p_prov').value.trim(), phone: el('p_phone').value.trim(),
+    email: el('p_email').value.trim(), question: el('p_question').value.trim(),
+    preferredDate: selDate, preferredTime: selTime,
+    addonNote: !s.noteIncluded && el('addonNote').checked,
+    policyAccepted: el('p_accept').checked,
+    source: selSource, sourceOther: selSource === 'other' ? el('p_source_other').value.trim() : '',
+    slipBase64: slipB64, slipFilename: slipName
+  };
+  function done(res) {
+    if (res && res.success) {
+      el('bidVal').textContent = res.bookingId;
+      el('progressBar').style.display = 'none';
+      el('s5title').textContent = res.confirmed ? 'ยืนยันการจองแล้วค่ะ ✅' : 'ส่งการจองแล้วค่ะ';
+      el('s5pending').style.display = res.confirmed ? 'none' : 'block';
+      el('s5confirmed').style.display = res.confirmed ? 'block' : 'none';
+      goStep(5);
+      return;
+    }
+    btn.disabled = false; btn.textContent = 'ยืนยันการจอง · Confirm';
+    showErr('err4', (res && res.message) || 'เกิดข้อผิดพลาด กรุณาลองใหม่ค่ะ');
+    if (res && res.slotTaken) { selTime = null; setTimeout(function () { goStep(2); chooseDateAgain(); }, 1500); }
+  }
+  payload.action = 'submit';
+  payload.src = srcTag;
+  api(payload, 120000, function (r, err) {
+    if (err || !r) { done({ success: false, message: NET_ERR }); return; }
+    done(r);
+  });
+}
+function chooseDateAgain() {
+  var cells = document.querySelectorAll('#calBody .chosen');
+  if (cells.length) chooseDate(selDate, cells[0]);
+}
+
+/* ── เวลาเกิด: ช่อง ชม. : นาที ── */
+function onTimePart(input, nextId) {
+  var v = input.value.replace(/[^0-9]/g, '').slice(0, 2);
+  if (input.value !== v) input.value = v;
+  if (nextId && v.length === 2) el(nextId).focus();
+}
+function toggleBirthUnknown() {
+  var unk = el('p_bunk').checked;
+  ['p_bh', 'p_bm'].forEach(function (id) { el(id).disabled = unk; if (unk) el(id).value = ''; });
+}
+function birthTimeValue() {
+  if (el('p_bunk').checked) return 'ไม่ทราบ';
+  var h = el('p_bh').value, m = el('p_bm').value;
+  if (!h || !m) return '';
+  var hn = Number(h), mn = Number(m);
+  if (isNaN(hn) || isNaN(mn) || hn > 23 || mn > 59) return '';
+  return pad2(hn) + ':' + pad2(mn);
+}
+
+/* ── กล่องเงื่อนไขการยกเลิก (เน้นให้เห็นชัด) ── */
+function cancelHtml(s) {
+  return '<div class="cb-title">การยกเลิก / เลื่อนนัด · Cancellation</div>' +
+    '<p>• ยกเลิกก่อนเวลานัดอย่างน้อย <b>' + s.cancelHours + ' ชั่วโมง</b> รับเงินคืนเต็มจำนวน</p>' +
+    '<p>• <b>การยกเลิกที่กระชั้นกว่า ' + s.cancelHours + ' ชั่วโมง ขอสงวนสิทธิ์ไม่คืนค่าบริการทุกกรณี</b></p>' +
+    '<p>• เลื่อนนัดได้ 1 ครั้ง ต้องแจ้งก่อน ' + s.cancelHours + ' ชั่วโมง</p>' +
+    '<span class="en">Cancel at least ' + s.cancelHours + ' hours before your session for a full refund. ' +
+    'Cancellations made less than ' + s.cancelHours + ' hours before are non-refundable in all cases. One reschedule allowed.</span>';
+}
+
+renderTopics();
+renderSources();
+</script>
+</body>
+</html>
